@@ -1153,51 +1153,71 @@
       });
     });
   </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cf5eb46278ac5a0',t:'MTc3MTMzNzk1OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>
-/* قراءة رقم المتجر من الرابط */
-const params = new URLSearchParams(window.location.search);
-const storeId = params.get("id");
+<script>
+/*
+AUREX Dynamic Store Loader
+هذا الكود يربط المتجر مع لوحة الإدارة
+*/
 
-/* جلب كل المتاجر */
-const stores = JSON.parse(localStorage.getItem("stores") || "[]");
+function loadStore() {
 
-/* إيجاد المتجر المطلوب */
-const store = stores.find(s => s.id === storeId);
+  // نعرف أي متجر نفتح من الرابط
+  const params = new URLSearchParams(window.location.search);
+  const storeId = params.get("id");
 
-/* إذا ما فيه متجر نوقف */
-if(!store){
-console.log("No store selected");
-}else{
+  if(!storeId) return;
 
-/* تغيير الاسم */
-document.title = store.name;
+  // نقرأ كل المتاجر المحفوظة
+  const stores = JSON.parse(localStorage.getItem("stores") || "[]");
 
-/* تغيير العنوان الرئيسي */
-const hero = document.querySelector("h1");
-if(hero) hero.innerText = store.name;
+  const store = stores.find(s => s.id === storeId);
 
-/* تغيير الوصف */
-const desc = document.querySelector("p");
-if(desc) desc.innerText = store.description;
+  if(!store) return;
 
-/* تغيير الألوان */
-document.documentElement.style.setProperty("--primary", store.primaryColor);
-document.body.style.backgroundColor = "#fff";
+  // ===========================
+  // تغيير النصوص
+  // ===========================
 
-/* تغيير أي زر أو عنصر يستخدم اللون */
-document.querySelectorAll("button").forEach(btn=>{
-btn.style.backgroundColor = store.primaryColor;
-});
+  document.title = store.name;
+  
+  const logo = document.getElementById("logo-text");
+  if(logo) logo.innerText = store.name;
 
-/* تغيير الشعار إذا كان صورة */
-if(store.logo){
-const logo = document.getElementById("logo");
-if(logo){
-logo.src = store.logo;
+  const footerLogo = document.getElementById("footer-logo");
+  if(footerLogo) footerLogo.innerText = store.name;
+
+  const heroTitle = document.getElementById("hero-title");
+  if(heroTitle) heroTitle.innerText = store.name;
+
+  const heroDesc = document.getElementById("hero-description");
+  if(heroDesc) heroDesc.innerText = store.description || "Welcome to our store";
+
+  // ===========================
+  // تغيير الألوان
+  // ===========================
+
+  if(store.primaryColor){
+
+    document.documentElement.style.setProperty("--primary", store.primaryColor);
+
+    // تغيير كل العناصر السوداء تلقائياً
+    document.querySelectorAll(".bg-black").forEach(el=>{
+      el.style.background = store.primaryColor;
+    });
+
+    document.querySelectorAll(".text-black").forEach(el=>{
+      el.style.color = store.primaryColor;
+    });
+
+    document.querySelectorAll(".border-black").forEach(el=>{
+      el.style.borderColor = store.primaryColor;
+    });
+
+  }
+
 }
-}
 
-}
+loadStore();
 </script>
 </body>
 </html>
