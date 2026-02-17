@@ -1,19 +1,32 @@
-// القيم الافتراضية (لو ما في إعدادات محفوظة)
-const DEFAULT_CONFIG = {
-  storeName: "AUREX Store",
-  heroTitle: "AUREX",
-  heroDescription: "Premium Fashion Experience",
+function createStore() {
 
-  colors: {
-    primary: "#000000",
-    background: "#ffffff",
-    text: "#111111"
-  },
+const file = document.getElementById("store-logo").files[0];
 
-  logoText: "AUREX"
+if(file){
+const reader = new FileReader();
+reader.onload = function(e){
+
+saveStore(e.target.result);
 };
+reader.readAsDataURL(file);
+}else{
+saveStore(null);
+}
+}
 
-// قراءة من لوحة الإدارة
-const saved = localStorage.getItem("AUREX_STORE_CONFIG");
+function saveStore(logoBase64){
 
-window.STORE_CONFIG = saved ? JSON.parse(saved) : DEFAULT_CONFIG;
+const id = "store" + Date.now();
+
+stores.push({
+id,
+name: document.getElementById("store-name").value,
+email: document.getElementById("store-email").value,
+password: document.getElementById("store-password").value,
+primaryColor: document.getElementById("store-color").value,
+description: "New Store",
+logo: logoBase64
+});
+
+save();
+}
