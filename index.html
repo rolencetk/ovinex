@@ -1153,5 +1153,41 @@
       });
     });
   </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cf5eb46278ac5a0',t:'MTc3MTMzNzk1OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cf5eb46278ac5a0',t:'MTc3MTMzNzk1OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const config = window.STORE_CONFIG;
+
+  // تغيير العنوان
+  document.title = config.storeName;
+
+  // تغيير النصوص
+  const logo = document.getElementById("logo-text");
+  if (logo) logo.textContent = config.logoText;
+
+  const heroTitle = document.getElementById("hero-title");
+  if (heroTitle) heroTitle.textContent = config.heroTitle;
+
+  const heroDesc = document.getElementById("hero-description");
+  if (heroDesc) heroDesc.textContent = config.heroDescription;
+
+  // تطبيق الألوان
+  document.body.style.backgroundColor = config.colors.background;
+  document.body.style.color = config.colors.text;
+
+  // كل العناصر السوداء تتحول للون الأساسي
+  document.querySelectorAll(".bg-black").forEach(el=>{
+    el.style.backgroundColor = config.colors.primary;
+  });
+
+  document.querySelectorAll(".text-black").forEach(el=>{
+    el.style.color = config.colors.primary;
+  });
+
+  document.querySelectorAll(".border-black").forEach(el=>{
+    el.style.borderColor = config.colors.primary;
+  });
+});
+</script>
+</body>
 </html>
