@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AUREX Admin</title>
+<style>
+body{font-family:Arial;padding:40px;background:#f4f4f4}
+.card{background:#fff;padding:25px;border-radius:10px;max-width:600px;margin:auto}
+input{width:100%;padding:10px;margin:8px 0}
+button{padding:12px 20px;background:black;color:white;border:none;cursor:pointer}
+</style>
+</head>
+<body>
+
+<div class="card">
+<h2>AUREX Store Manager</h2>
+
+<label>Store Name</label>
+<input id="storeName">
+
+<label>Logo Text</label>
+<input id="logoText">
+
+<label>Hero Title</label>
+<input id="heroTitle">
+
+<label>Description</label>
+<input id="heroDescription">
+
+<label>Primary Color</label>
+<input id="primary" type="color">
+
+<label>Background</label>
+<input id="background" type="color">
+
+<label>Text Color</label>
+<input id="text" type="color">
+
+<button onclick="save()">Save Store</button>
+<button onclick="preview()">Open Store</button>
+</div>
+
+<script>
+function load(){
+const data = JSON.parse(localStorage.getItem("AUREX_STORE_CONFIG"));
+if(!data) return;
+
+storeName.value = data.storeName;
+logoText.value = data.logoText;
+heroTitle.value = data.heroTitle;
+heroDescription.value = data.heroDescription;
+primary.value = data.colors.primary;
+background.value = data.colors.background;
+text.value = data.colors.text;
+}
+
+function save(){
+const config = {
+storeName: storeName.value,
+logoText: logoText.value,
+heroTitle: heroTitle.value,
+heroDescription: heroDescription.value,
+colors:{
+primary: primary.value,
+background: background.value,
+text: text.value
+}
+};
+
+localStorage.setItem("AUREX_STORE_CONFIG", JSON.stringify(config));
+alert("Saved ✔");
+}
+
+function preview(){
+window.open("index.html","_blank");
+}
+
+load();
+</script>
+
+</body>
+</html>
