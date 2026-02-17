@@ -1153,41 +1153,51 @@
       });
     });
   </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cf5eb46278ac5a0',t:'MTc3MTMzNzk1OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const config = window.STORE_CONFIG;
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cf5eb46278ac5a0',t:'MTc3MTMzNzk1OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>
+/* قراءة رقم المتجر من الرابط */
+const params = new URLSearchParams(window.location.search);
+const storeId = params.get("id");
 
-  // تغيير العنوان
-  document.title = config.storeName;
+/* جلب كل المتاجر */
+const stores = JSON.parse(localStorage.getItem("stores") || "[]");
 
-  // تغيير النصوص
-  const logo = document.getElementById("logo-text");
-  if (logo) logo.textContent = config.logoText;
+/* إيجاد المتجر المطلوب */
+const store = stores.find(s => s.id === storeId);
 
-  const heroTitle = document.getElementById("hero-title");
-  if (heroTitle) heroTitle.textContent = config.heroTitle;
+/* إذا ما فيه متجر نوقف */
+if(!store){
+console.log("No store selected");
+}else{
 
-  const heroDesc = document.getElementById("hero-description");
-  if (heroDesc) heroDesc.textContent = config.heroDescription;
+/* تغيير الاسم */
+document.title = store.name;
 
-  // تطبيق الألوان
-  document.body.style.backgroundColor = config.colors.background;
-  document.body.style.color = config.colors.text;
+/* تغيير العنوان الرئيسي */
+const hero = document.querySelector("h1");
+if(hero) hero.innerText = store.name;
 
-  // كل العناصر السوداء تتحول للون الأساسي
-  document.querySelectorAll(".bg-black").forEach(el=>{
-    el.style.backgroundColor = config.colors.primary;
-  });
+/* تغيير الوصف */
+const desc = document.querySelector("p");
+if(desc) desc.innerText = store.description;
 
-  document.querySelectorAll(".text-black").forEach(el=>{
-    el.style.color = config.colors.primary;
-  });
+/* تغيير الألوان */
+document.documentElement.style.setProperty("--primary", store.primaryColor);
+document.body.style.backgroundColor = "#fff";
 
-  document.querySelectorAll(".border-black").forEach(el=>{
-    el.style.borderColor = config.colors.primary;
-  });
+/* تغيير أي زر أو عنصر يستخدم اللون */
+document.querySelectorAll("button").forEach(btn=>{
+btn.style.backgroundColor = store.primaryColor;
 });
+
+/* تغيير الشعار إذا كان صورة */
+if(store.logo){
+const logo = document.getElementById("logo");
+if(logo){
+logo.src = store.logo;
+}
+}
+
+}
 </script>
 </body>
 </html>
